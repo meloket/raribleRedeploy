@@ -4,7 +4,7 @@ pragma solidity 0.7.6;
 pragma abicoder v2;
 
 import "./ExchangeV2Core.sol";
-import "@rarible/transfer-manager/contracts/RaribleTransferManager.sol";
+import "../transfer-manager/RaribleTransferManager.sol";
 
 contract ExchangeV2 is ExchangeV2Core, RaribleTransferManager {
     function __ExchangeV2_init(

@@ -8,9 +8,9 @@ import "./libraries/LibOrderData.sol";
 import "./OrderValidator.sol";
 import "./AssetMatcher.sol";
 
-import "@rarible/transfer-manager/contracts/TransferExecutor.sol";
-import "@rarible/transfer-manager/contracts/interfaces/ITransferManager.sol";
-import "@rarible/transfer-manager/contracts/lib/LibDeal.sol";
+import "../transfer-manager/TransferExecutor.sol";
+import "../transfer-manager/interfaces/ITransferManager.sol";
+import "../transfer-manager/lib/LibDeal.sol";
 
 abstract contract ExchangeV2Core is Initializable, OwnableUpgradeable, AssetMatcher, TransferExecutor, OrderValidator, ITransferManager {
     using SafeMathUpgradeable for uint;
