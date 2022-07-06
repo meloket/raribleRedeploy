@@ -5,6 +5,7 @@ pragma abicoder v2;
 
 import "./ERC1155Upgradeable.sol";
 import "@rarible/royalties/contracts/impl/RoyaltiesV2Impl.sol";
+import "@rarible/royalties/contracts/LibRoyalties2981.sol";
 import "@rarible/royalties-upgradeable/contracts/RoyaltiesV2Upgradeable.sol";
 import "@rarible/lazy-mint/contracts/erc-1155/IERC1155LazyMint.sol";
 import "./Mint1155Validator.sol";
