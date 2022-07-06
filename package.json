@@ -6,7 +6,28 @@
   "private": true,
   "workspaces": {
     "packages": [
-      "lib-part"
+      "auction",
+      "custom-matchers",
+      "deploy",
+      "exchange-v2",
+      "gas-usage-tests",
+      "exchange-wrapper",
+      "interfaces",
+      "meta-tx",
+      "lazy-mint",
+      "lib-asset",
+      "lib-bp",
+      "lib-part",
+      "lib-signature",
+      "role-operator",
+      "royalties",
+      "royalties-registry",
+      "royalties-upgradeable",
+      "tokens",
+      "tokens-minimal",
+      "tokens-test",
+      "transfer-manager",
+      "transfer-proxy"
     ]
   },
   "scripts": {
