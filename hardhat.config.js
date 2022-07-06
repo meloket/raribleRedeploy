@@ -14,7 +14,7 @@ module.exports = {
       },
     },
   },
-  defaultNetwork: "mumbai",
+  defaultNetwork: "hardhat",
   networks: {
     hardhat: {},
     polygon: {
