@@ -12,6 +12,7 @@ let ERC1155Rarible;
 let ERC721RaribleFactoryC2;
 let RoyaltiesRegistry;
 let ExchangeV2;
+let ERC721RaribleBeacon;
 let transferProxy;
 let erc20TransferProxy;
 let lazyTransferProxy721;
@@ -21,6 +22,7 @@ let erc721rarible;
 let erc1155rarible;
 let exchangeV2;
 let erc721raribleFactoryC2;
+let erc721RaribleBeacon;
 
 // Start test block
 describe("Rarible Redeployment", function () {
@@ -37,6 +39,7 @@ describe("Rarible Redeployment", function () {
     RoyaltiesRegistry = await ethers.getContractFactory("RoyaltiesRegistry");
     ExchangeV2 = await ethers.getContractFactory("ExchangeV2");
     ERC721RaribleFactoryC2 = await ethers.getContractFactory("ERC721RaribleFactoryC2");
+    ERC721RaribleBeacon = await ethers.getContractFactory("ERC721RaribleBeacon");
 
     transferProxy = await TransferProxy.deploy();
     await transferProxy.deployed();
@@ -58,10 +61,6 @@ describe("Rarible Redeployment", function () {
 
     console.log(lazyTransferProxy1155.address, "lazyTransferProxy1155 contract deployed: ");
 
-    erc721raribleFactoryC2 = await ERC721RaribleFactoryC2.deploy();
-    await erc721raribleFactoryC2.deployed();
-
-    console.log(erc721raribleFactoryC2.address, "ERC-721 Token Factory contract deployed ");
 
     royaltiesRegistry = await upgrades.deployProxy(RoyaltiesRegistry, [], {
       initializer: "__RoyaltiesRegistry_init",
@@ -98,6 +97,19 @@ describe("Rarible Redeployment", function () {
       " erc721rarible implementation address"
     );
     console.log(await upgrades.erc1967.getAdminAddress(erc721rarible.address), " erc721rarible admin address");
+
+
+    erc721RaribleBeacon = await ERC721RaribleBeacon.deploy(erc721rarible.address);
+    await erc721RaribleBeacon.deployed();
+  
+    console.log(erc721RaribleBeacon.address, "ERC721Beacon contract deployed ");
+
+
+    erc721raribleFactoryC2 = await ERC721RaribleFactoryC2.deploy();
+    await erc721raribleFactoryC2.deployed();
+
+    console.log(erc721raribleFactoryC2.address, "ERC-721 Token Factory contract deployed ");
+
 
     erc1155rarible = await upgrades.deployProxy(
       ERC1155Rarible,

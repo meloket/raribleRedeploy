@@ -14,6 +14,7 @@ async function main() {
   const ERC1155Rarible = await ethers.getContractFactory("ERC1155Rarible");
   const RoyaltiesRegistry = await ethers.getContractFactory("RoyaltiesRegistry");
   const ExchangeV2 = await ethers.getContractFactory("ExchangeV2");
+  const ERC721RaribleBeacon = await ethers.getContractFactory("ERC721RaribleBeacon");
   const ERC721RaribleFactoryC2 = await ethers.getContractFactory("ERC721RaribleFactoryC2");
 
   const transferProxy = await TransferProxy.deploy();
@@ -36,10 +37,6 @@ async function main() {
 
   console.log(lazyTransferProxy1155.address, "lazyTransferProxy1155 contract deployed ");
 
-  const erc721raribleFactoryC2 = await ERC721RaribleFactoryC2.deploy();
-  await erc721raribleFactoryC2.deployed();
-
-  console.log(erc721raribleFactoryC2.address, "ERC-721 Token Factory contract deployed ");
 
   const royaltiesRegistry = await upgrades.deployProxy(RoyaltiesRegistry, [], {
     initializer: "__RoyaltiesRegistry_init",
@@ -76,6 +73,19 @@ async function main() {
     " Asset Contract Erc721 implementation address"
   );
   console.log(await upgrades.erc1967.getAdminAddress(erc721rarible.address), " Asset Contract Erc721 admin address");
+
+
+  const erc721RaribleBeacon = await ERC721RaribleBeacon.deploy(erc721rarible.address);
+  await erc721RaribleBeacon.deployed();
+
+  console.log(erc721RaribleBeacon.address, "ERC721Beacon contract deployed ");
+
+
+  const erc721raribleFactoryC2 = await ERC721RaribleFactoryC2.deploy(erc721RaribleBeacon.address, transferProxy.address, lazyTransferProxy721.address);
+  await erc721raribleFactoryC2.deployed();
+
+  console.log(erc721raribleFactoryC2.address, "ERC-721 Token Factory contract deployed ");
+
 
   const erc1155rarible = await upgrades.deployProxy(
     ERC1155Rarible,
@@ -162,6 +172,18 @@ async function main() {
     address: erc721rarible.address,
     contract: "ERC721Rarible",
     constructorArguments: [],
+  });
+
+  await run("verify:verify", {
+    address: erc721RaribleBeacon.address,
+    contract: "ERC721RaribleBeacon",
+    constructorArguments: [erc721rarible.address],
+  });
+
+  await run("verify:verify", {
+    address: erc721raribleFactoryC2.address,
+    contract: "ERC721RaribleFactoryC2",
+    constructorArguments: [erc721RaribleBeacon.address, transferProxy.address, lazyTransferProxy721.address],
   });
 
   await run("verify:verify", {
