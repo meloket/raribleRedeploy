@@ -13,6 +13,8 @@ let ERC721RaribleFactoryC2;
 let RoyaltiesRegistry;
 let ExchangeV2;
 let ERC721RaribleBeacon;
+let ERC1155RaribleBeacon;
+let ERC1155RaribleFactoryC2;
 let transferProxy;
 let erc20TransferProxy;
 let lazyTransferProxy721;
@@ -23,6 +25,8 @@ let erc1155rarible;
 let exchangeV2;
 let erc721raribleFactoryC2;
 let erc721RaribleBeacon;
+let erc1155RaribleBeacon;
+let erc1155raribleFactoryC2;
 
 // Start test block
 describe("Rarible Redeployment", function () {
@@ -40,26 +44,28 @@ describe("Rarible Redeployment", function () {
     ExchangeV2 = await ethers.getContractFactory("ExchangeV2");
     ERC721RaribleFactoryC2 = await ethers.getContractFactory("ERC721RaribleFactoryC2");
     ERC721RaribleBeacon = await ethers.getContractFactory("ERC721RaribleBeacon");
+    ERC1155RaribleBeacon = await ethers.getContractFactory("ERC1155RaribleBeacon");
+    ERC1155RaribleFactoryC2 = await ethers.getContractFactory("ERC1155RaribleFactoryC2");
 
     transferProxy = await TransferProxy.deploy();
     await transferProxy.deployed();
 
-    console.log(transferProxy.address, "NFT Transfer Proxy (for Approvals) deployed: ");
+    console.log(transferProxy.address, "NFT Transfer Proxy (for Approvals) deployed: \n");
 
     erc20TransferProxy = await ERC20TransferProxy.deploy();
     await erc20TransferProxy.deployed();
 
-    console.log(erc20TransferProxy.address, "erc20TransferProxy contract deployed: ");
+    console.log(erc20TransferProxy.address, "erc20TransferProxy contract deployed: \n");
 
     lazyTransferProxy721 = await ERC721LazyMintTransferProxy.deploy();
     await lazyTransferProxy721.deployed();
 
-    console.log(lazyTransferProxy721.address, "lazyTransferProxy721 contract deployed: ");
+    console.log(lazyTransferProxy721.address, "lazyTransferProxy721 contract deployed: \n");
 
     lazyTransferProxy1155 = await ERC1155LazyMintTransferProxy.deploy();
     await lazyTransferProxy1155.deployed();
 
-    console.log(lazyTransferProxy1155.address, "lazyTransferProxy1155 contract deployed: ");
+    console.log(lazyTransferProxy1155.address, "lazyTransferProxy1155 contract deployed: \n");
 
 
     royaltiesRegistry = await upgrades.deployProxy(RoyaltiesRegistry, [], {
@@ -72,7 +78,7 @@ describe("Rarible Redeployment", function () {
       await upgrades.erc1967.getImplementationAddress(royaltiesRegistry.address),
       " royaltiesRegistry implementation address"
     );
-    console.log(await upgrades.erc1967.getAdminAddress(royaltiesRegistry.address), " royaltiesRegistry admin address");
+    console.log(await upgrades.erc1967.getAdminAddress(royaltiesRegistry.address), " royaltiesRegistry admin address\n");
 
     erc721rarible = await upgrades.deployProxy(
       ERC721Rarible,
@@ -96,19 +102,19 @@ describe("Rarible Redeployment", function () {
       await upgrades.erc1967.getImplementationAddress(erc721rarible.address),
       " erc721rarible implementation address"
     );
-    console.log(await upgrades.erc1967.getAdminAddress(erc721rarible.address), " erc721rarible admin address");
+    console.log(await upgrades.erc1967.getAdminAddress(erc721rarible.address), " erc721rarible admin address\n");
 
 
     erc721RaribleBeacon = await ERC721RaribleBeacon.deploy(erc721rarible.address);
     await erc721RaribleBeacon.deployed();
   
-    console.log(erc721RaribleBeacon.address, "ERC721Beacon contract deployed ");
+    console.log(erc721RaribleBeacon.address, "ERC721Beacon contract deployed \n");
 
 
-    erc721raribleFactoryC2 = await ERC721RaribleFactoryC2.deploy();
+    erc721raribleFactoryC2 = await ERC721RaribleFactoryC2.deploy(erc721RaribleBeacon.address, transferProxy.address, lazyTransferProxy721.address);
     await erc721raribleFactoryC2.deployed();
 
-    console.log(erc721raribleFactoryC2.address, "ERC-721 Token Factory contract deployed ");
+    console.log(erc721raribleFactoryC2.address, "ERC-721 Token Factory contract deployed \n");
 
 
     erc1155rarible = await upgrades.deployProxy(
@@ -126,7 +132,20 @@ describe("Rarible Redeployment", function () {
       await upgrades.erc1967.getImplementationAddress(erc1155rarible.address),
       " erc1155rarible implementation address"
     );
-    console.log(await upgrades.erc1967.getAdminAddress(erc1155rarible.address), " erc1155rarible admin address");
+    console.log(await upgrades.erc1967.getAdminAddress(erc1155rarible.address), " erc1155rarible admin address\n");
+
+
+    erc1155RaribleBeacon = await ERC1155RaribleBeacon.deploy(erc1155rarible.address);
+    await erc1155RaribleBeacon.deployed();
+  
+    console.log(erc1155RaribleBeacon.address, "ERC1155Beacon contract deployed \n");
+
+
+    erc1155raribleFactoryC2 = await ERC1155RaribleFactoryC2.deploy(erc1155RaribleBeacon.address, transferProxy.address, lazyTransferProxy1155.address);
+    await erc1155raribleFactoryC2.deployed();
+
+    console.log(erc1155raribleFactoryC2.address, "ERC-1155 Token Factory contract deployed \n");
+
 
     exchangeV2 = await upgrades.deployProxy(
       ExchangeV2,
@@ -148,6 +167,6 @@ describe("Rarible Redeployment", function () {
       await upgrades.erc1967.getImplementationAddress(exchangeV2.address),
       " exchangeV2 implementation address"
     );
-    console.log(await upgrades.erc1967.getAdminAddress(exchangeV2.address), " exchangeV2 admin address");
+    console.log(await upgrades.erc1967.getAdminAddress(exchangeV2.address), " exchangeV2 admin address\n");
   });
 });

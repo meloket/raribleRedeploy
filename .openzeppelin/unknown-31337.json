@@ -6,6 +6,16 @@
   },
   "proxies": [
     {
+      "address": "0x610178dA211FEF7D417bC0e6FeD39F05609AD788",
+      "txHash": "0xd35b137c59d03555366076248b8ebad3f33f9ddad4ade3c53dd7970c9b8ce354",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x9A676e781A523b5d0C0e43731313A708CB607508",
+      "txHash": "0x3e7cf255858198e175d043839fd89b21b41d3b06f7477ceb566a23e8fe00ae7e",
+      "kind": "transparent"
+    },
+    {
       "address": "0x0165878A594ca255338adfa4d48449f69242Eb8F",
       "txHash": "0x656a57ff38fbd21f0765eea97ecdb8650e8eacff2513ecf6b174aa211c85160c",
       "kind": "transparent"
@@ -16,13 +26,13 @@
       "kind": "transparent"
     },
     {
-      "address": "0x610178dA211FEF7D417bC0e6FeD39F05609AD788",
-      "txHash": "0xd35b137c59d03555366076248b8ebad3f33f9ddad4ade3c53dd7970c9b8ce354",
+      "address": "0xA51c1fc2f0D1a1b8494Ed1FE312d7C3a78Ed91C0",
+      "txHash": "0xbe1d099882a26b723102687a205eb2b6a87c2069d8e1af9312778485f183a585",
       "kind": "transparent"
     },
     {
-      "address": "0xA51c1fc2f0D1a1b8494Ed1FE312d7C3a78Ed91C0",
-      "txHash": "0xcafefe30e86b9988340c94b322f9ebb73824d8bcc941a3df0188c3e6bae8719f",
+      "address": "0x959922bE3CAee4b8Cd9a407cc3ac1C251C2007B1",
+      "txHash": "0xe903ca77d89dd91f6dfcfaa7c03b90d6ee0957c9102e819e49c63686b1450e93",
       "kind": "transparent"
     }
   ],
@@ -76,7 +86,7 @@
             "label": "royaltiesByTokenAndTokenId",
             "offset": 0,
             "slot": "101",
-            "type": "t_mapping(t_bytes32,t_struct(RoyaltiesSet)6240_storage)",
+            "type": "t_mapping(t_bytes32,t_struct(RoyaltiesSet)6925_storage)",
             "contract": "RoyaltiesRegistry",
             "src": "@rarible\\royalties-registry\\contracts\\RoyaltiesRegistry.sol:29"
           },
@@ -84,7 +94,7 @@
             "label": "royaltiesByToken",
             "offset": 0,
             "slot": "102",
-            "type": "t_mapping(t_address,t_struct(RoyaltiesSet)6240_storage)",
+            "type": "t_mapping(t_address,t_struct(RoyaltiesSet)6925_storage)",
             "contract": "RoyaltiesRegistry",
             "src": "@rarible\\royalties-registry\\contracts\\RoyaltiesRegistry.sol:31"
           },
@@ -114,7 +124,7 @@
             "label": "address payable",
             "numberOfBytes": "20"
           },
-          "t_array(t_struct(Part)5918_storage)dyn_storage": {
+          "t_array(t_struct(Part)6603_storage)dyn_storage": {
             "label": "struct LibPart.Part[]",
             "numberOfBytes": "32"
           },
@@ -138,7 +148,7 @@
             "label": "bytes32",
             "numberOfBytes": "32"
           },
-          "t_mapping(t_address,t_struct(RoyaltiesSet)6240_storage)": {
+          "t_mapping(t_address,t_struct(RoyaltiesSet)6925_storage)": {
             "label": "mapping(address => struct RoyaltiesRegistry.RoyaltiesSet)",
             "numberOfBytes": "32"
           },
@@ -146,11 +156,11 @@
             "label": "mapping(address => uint256)",
             "numberOfBytes": "32"
           },
-          "t_mapping(t_bytes32,t_struct(RoyaltiesSet)6240_storage)": {
+          "t_mapping(t_bytes32,t_struct(RoyaltiesSet)6925_storage)": {
             "label": "mapping(bytes32 => struct RoyaltiesRegistry.RoyaltiesSet)",
             "numberOfBytes": "32"
           },
-          "t_struct(Part)5918_storage": {
+          "t_struct(Part)6603_storage": {
             "label": "struct LibPart.Part",
             "members": [
               {
@@ -168,7 +178,7 @@
             ],
             "numberOfBytes": "32"
           },
-          "t_struct(RoyaltiesSet)6240_storage": {
+          "t_struct(RoyaltiesSet)6925_storage": {
             "label": "struct RoyaltiesRegistry.RoyaltiesSet",
             "members": [
               {
@@ -179,7 +189,7 @@
               },
               {
                 "label": "royalties",
-                "type": "t_array(t_struct(Part)5918_storage)dyn_storage",
+                "type": "t_array(t_struct(Part)6603_storage)dyn_storage",
                 "offset": 0,
                 "slot": "1"
               }
@@ -406,7 +416,7 @@
             "label": "royalties",
             "offset": 0,
             "slot": "454",
-            "type": "t_mapping(t_uint256,t_array(t_struct(Part)5918_storage)dyn_storage)",
+            "type": "t_mapping(t_uint256,t_array(t_struct(Part)6603_storage)dyn_storage)",
             "contract": "AbstractRoyalties",
             "src": "@rarible\\royalties\\contracts\\impl\\AbstractRoyalties.sol:8"
           },
@@ -414,7 +424,7 @@
             "label": "creators",
             "offset": 0,
             "slot": "455",
-            "type": "t_mapping(t_uint256,t_array(t_struct(Part)5918_storage)dyn_storage)",
+            "type": "t_mapping(t_uint256,t_array(t_struct(Part)6603_storage)dyn_storage)",
             "contract": "ERC721Lazy",
             "src": "@rarible\\tokens\\contracts\\erc-721\\ERC721Lazy.sol:23"
           },
@@ -476,7 +486,7 @@
             "label": "struct EnumerableMapUpgradeable.MapEntry[]",
             "numberOfBytes": "32"
           },
-          "t_array(t_struct(Part)5918_storage)dyn_storage": {
+          "t_array(t_struct(Part)6603_storage)dyn_storage": {
             "label": "struct LibPart.Part[]",
             "numberOfBytes": "32"
           },
@@ -528,7 +538,7 @@
             "label": "mapping(uint256 => address)",
             "numberOfBytes": "32"
           },
-          "t_mapping(t_uint256,t_array(t_struct(Part)5918_storage)dyn_storage)": {
+          "t_mapping(t_uint256,t_array(t_struct(Part)6603_storage)dyn_storage)": {
             "label": "mapping(uint256 => struct LibPart.Part[])",
             "numberOfBytes": "32"
           },
@@ -580,7 +590,7 @@
             ],
             "numberOfBytes": "64"
           },
-          "t_struct(Part)5918_storage": {
+          "t_struct(Part)6603_storage": {
             "label": "struct LibPart.Part",
             "members": [
               {
@@ -652,8 +662,8 @@
       }
     },
     "55242edc0498361f54af16aa478bbf745df33b91f66c493a579061e1438d5f0c": {
-      "address": "0x8A791620dd6260079BF849Dc5567aDC3F2FdC318",
-      "txHash": "0xd4a69893bc8b1ba619652570f110bdeac27b0b00e44c97d6d1b5c3261c5e39de",
+      "address": "0xB7f8BC63BbcaD18155201308C8f3540b07f84F5e",
+      "txHash": "0xd5c32190fae200c1c33381d5bc4ab2e1a25ec977bceedaf19698d2372c00c04d",
       "layout": {
         "storage": [
           {
@@ -836,7 +846,7 @@
             "label": "royalties",
             "offset": 0,
             "slot": "506",
-            "type": "t_mapping(t_uint256,t_array(t_struct(Part)5918_storage)dyn_storage)",
+            "type": "t_mapping(t_uint256,t_array(t_struct(Part)6603_storage)dyn_storage)",
             "contract": "AbstractRoyalties",
             "src": "@rarible\\royalties\\contracts\\impl\\AbstractRoyalties.sol:8"
           },
@@ -844,7 +854,7 @@
             "label": "creators",
             "offset": 0,
             "slot": "507",
-            "type": "t_mapping(t_uint256,t_array(t_struct(Part)5918_storage)dyn_storage)",
+            "type": "t_mapping(t_uint256,t_array(t_struct(Part)6603_storage)dyn_storage)",
             "contract": "ERC1155Lazy",
             "src": "@rarible\\tokens\\contracts\\erc-1155\\ERC1155Lazy.sol:20"
           },
@@ -954,7 +964,7 @@
             "label": "address payable",
             "numberOfBytes": "20"
           },
-          "t_array(t_struct(Part)5918_storage)dyn_storage": {
+          "t_array(t_struct(Part)6603_storage)dyn_storage": {
             "label": "struct LibPart.Part[]",
             "numberOfBytes": "32"
           },
@@ -998,7 +1008,7 @@
             "label": "mapping(bytes4 => bool)",
             "numberOfBytes": "32"
           },
-          "t_mapping(t_uint256,t_array(t_struct(Part)5918_storage)dyn_storage)": {
+          "t_mapping(t_uint256,t_array(t_struct(Part)6603_storage)dyn_storage)": {
             "label": "mapping(uint256 => struct LibPart.Part[])",
             "numberOfBytes": "32"
           },
@@ -1018,7 +1028,7 @@
             "label": "string",
             "numberOfBytes": "32"
           },
-          "t_struct(Part)5918_storage": {
+          "t_struct(Part)6603_storage": {
             "label": "struct LibPart.Part",
             "members": [
               {
@@ -1048,8 +1058,8 @@
       }
     },
     "beb3830a7f8e6c46f4f75421257b0f109660c9afeb5f3b3cd53db42f0ef29bb2": {
-      "address": "0xB7f8BC63BbcaD18155201308C8f3540b07f84F5e",
-      "txHash": "0xdf2acfc6fc1102f6bca57b77f37367f0ce4a99ea6ebe353352a8f6eeecaf0c23",
+      "address": "0x0B306BF915C4d645ff596e518fAf3F9669b97016",
+      "txHash": "0x8c7f1ff2611a3a28f561db849d6e43a2a31d7219677d8aa1ba82026a099856cf",
       "layout": {
         "storage": [
           {
@@ -1184,7 +1194,7 @@
             "label": "royaltiesRegistry",
             "offset": 0,
             "slot": "352",
-            "type": "t_contract(IRoyaltiesProvider)2879",
+            "type": "t_contract(IRoyaltiesProvider)3564",
             "contract": "RaribleTransferManager",
             "src": "@rarible\\transfer-manager\\contracts\\RaribleTransferManager.sol:22"
           },
@@ -1246,7 +1256,7 @@
             "label": "bytes4",
             "numberOfBytes": "4"
           },
-          "t_contract(IRoyaltiesProvider)2879": {
+          "t_contract(IRoyaltiesProvider)3564": {
             "label": "contract IRoyaltiesProvider",
             "numberOfBytes": "20"
           },

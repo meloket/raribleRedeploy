@@ -16,26 +16,28 @@ async function main() {
   const ExchangeV2 = await ethers.getContractFactory("ExchangeV2");
   const ERC721RaribleBeacon = await ethers.getContractFactory("ERC721RaribleBeacon");
   const ERC721RaribleFactoryC2 = await ethers.getContractFactory("ERC721RaribleFactoryC2");
+  const ERC1155RaribleBeacon = await ethers.getContractFactory("ERC1155RaribleBeacon");
+  const ERC1155RaribleFactoryC2 = await ethers.getContractFactory("ERC1155RaribleFactoryC2");
 
   const transferProxy = await TransferProxy.deploy();
   await transferProxy.deployed();
 
-  console.log(transferProxy.address, "NFT Transfer Proxy (for Approvals) deployed ");
+  console.log(transferProxy.address, "NFT Transfer Proxy (for Approvals) deployed \n");
 
   const erc20TransferProxy = await ERC20TransferProxy.deploy();
   await erc20TransferProxy.deployed();
 
-  console.log(erc20TransferProxy.address, "erc20TransferProxy contract deployed ");
+  console.log(erc20TransferProxy.address, "erc20TransferProxy contract deployed \n");
 
   const lazyTransferProxy721 = await ERC721LazyMintTransferProxy.deploy();
   await lazyTransferProxy721.deployed();
 
-  console.log(lazyTransferProxy721.address, "lazyTransferProxy721 contract deployed ");
+  console.log(lazyTransferProxy721.address, "lazyTransferProxy721 contract deployed \n");
 
   const lazyTransferProxy1155 = await ERC1155LazyMintTransferProxy.deploy();
   await lazyTransferProxy1155.deployed();
 
-  console.log(lazyTransferProxy1155.address, "lazyTransferProxy1155 contract deployed ");
+  console.log(lazyTransferProxy1155.address, "lazyTransferProxy1155 contract deployed \n");
 
 
   const royaltiesRegistry = await upgrades.deployProxy(RoyaltiesRegistry, [], {
@@ -48,7 +50,7 @@ async function main() {
     await upgrades.erc1967.getImplementationAddress(royaltiesRegistry.address),
     " External Royalties implementation address"
   );
-  console.log(await upgrades.erc1967.getAdminAddress(royaltiesRegistry.address), " External Royalties admin address");
+  console.log(await upgrades.erc1967.getAdminAddress(royaltiesRegistry.address), " External Royalties admin address\n");
 
   const erc721rarible = await upgrades.deployProxy(
     ERC721Rarible,
@@ -72,19 +74,19 @@ async function main() {
     await upgrades.erc1967.getImplementationAddress(erc721rarible.address),
     " Asset Contract Erc721 implementation address"
   );
-  console.log(await upgrades.erc1967.getAdminAddress(erc721rarible.address), " Asset Contract Erc721 admin address");
+  console.log(await upgrades.erc1967.getAdminAddress(erc721rarible.address), " Asset Contract Erc721 admin address\n");
 
 
   const erc721RaribleBeacon = await ERC721RaribleBeacon.deploy(erc721rarible.address);
   await erc721RaribleBeacon.deployed();
 
-  console.log(erc721RaribleBeacon.address, "ERC721Beacon contract deployed ");
+  console.log(erc721RaribleBeacon.address, "ERC721Beacon contract deployed \n");
 
 
   const erc721raribleFactoryC2 = await ERC721RaribleFactoryC2.deploy(erc721RaribleBeacon.address, transferProxy.address, lazyTransferProxy721.address);
   await erc721raribleFactoryC2.deployed();
 
-  console.log(erc721raribleFactoryC2.address, "ERC-721 Token Factory contract deployed ");
+  console.log(erc721raribleFactoryC2.address, "ERC-721 Token Factory contract deployed \n");
 
 
   const erc1155rarible = await upgrades.deployProxy(
@@ -102,7 +104,20 @@ async function main() {
     await upgrades.erc1967.getImplementationAddress(erc1155rarible.address),
     " Asset Contract Erc1155 implementation address"
   );
-  console.log(await upgrades.erc1967.getAdminAddress(erc1155rarible.address), " Asset Contract Erc1155 admin address");
+  console.log(await upgrades.erc1967.getAdminAddress(erc1155rarible.address), " Asset Contract Erc1155 admin address\n");
+
+
+  const erc1155RaribleBeacon = await ERC1155RaribleBeacon.deploy(erc1155rarible.address);
+  await erc1155RaribleBeacon.deployed();
+
+  console.log(erc1155RaribleBeacon.address, "ERC1155Beacon contract deployed \n");
+
+
+  const erc1155raribleFactoryC2 = await ERC1155RaribleFactoryC2.deploy(erc1155RaribleBeacon.address, transferProxy.address, lazyTransferProxy1155.address);
+  await erc1155raribleFactoryC2.deployed();
+
+  console.log(erc1155raribleFactoryC2.address, "ERC-1155 Token Factory contract deployed \n");
+
 
   const exchangeV2 = await upgrades.deployProxy(
     ExchangeV2,
@@ -124,7 +139,7 @@ async function main() {
     await upgrades.erc1967.getImplementationAddress(exchangeV2.address),
     " Exchange Contract implementation address"
   );
-  console.log(await upgrades.erc1967.getAdminAddress(exchangeV2.address), " Exchange Contract admin address");
+  console.log(await upgrades.erc1967.getAdminAddress(exchangeV2.address), " Exchange Contract admin address\n");
 
   //wait for 10 seconds.
   await sleep(10000);
@@ -190,6 +205,18 @@ async function main() {
     address: erc1155rarible.address,
     contract: "ERC1155Rarible",
     constructorArguments: [],
+  });
+
+  await run("verify:verify", {
+    address: erc1155RaribleBeacon.address,
+    contract: "ERC1155RaribleBeacon",
+    constructorArguments: [erc1155rarible.address],
+  });
+
+  await run("verify:verify", {
+    address: erc1155raribleFactoryC2.address,
+    contract: "ERC1155RaribleFactoryC2",
+    constructorArguments: [erc1155RaribleBeacon.address, transferProxy.address, lazyTransferProxy1155.address],
   });
 
   await run("verify:verify", {
