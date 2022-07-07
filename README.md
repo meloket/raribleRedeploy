@@ -20,11 +20,11 @@ yarn bootstrap
 ## Deploy on test network.
 
 ```bash
-npx hardhat run scripts/deployAll.js --network mumbai
+yarn testnet
 ```
 
 ## Deploy to main net.
 
 ```bash
-npx hardhat run scripts/deployAll.js --network polygon
+yarn mainnet
 ```

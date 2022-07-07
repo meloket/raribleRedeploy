@@ -35,7 +35,9 @@
     "bootstrap:ci": "lerna bootstrap --ci && lerna link",
     "lerna-publish": "lerna publish",
     "lerna-publish-only": "lerna publish from-package",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "testnet": "npx hardhat run scripts/deployAll.js --network mumbai",
+    "mainnet": "npx hardhat run scripts/deployAll.js --network polygon"
   },
   "author": "",
   "license": "ISC",
