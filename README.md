@@ -8,6 +8,10 @@ Sign In **https://polygonscan.com/** to get **POLYGON_API_KEY** for verification
 
 Add private key and public key to sign the deployment transactions.
 
+Add NEW_PROTOCOL_FEE: 600 for 6%.
+
+Add NEW_DEFAULT_FEE_RECEIVER for Royalties Fee Receiver address.
+
 
 Install node modules.
 
@@ -23,8 +27,20 @@ yarn bootstrap
 yarn testnet
 ```
 
+## Verify Contract on test network.
+
+```bash
+npx hardhat verify contractAddress --network mumbai
+```
+
 ## Deploy to main net.
 
 ```bash
 yarn mainnet
+```
+
+## Verify Contract on main network.
+
+```bash
+npx hardhat verify contractAddress --network polygon
 ```
