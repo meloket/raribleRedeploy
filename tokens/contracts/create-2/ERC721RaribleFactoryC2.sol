@@ -27,18 +27,20 @@ contract ERC721RaribleFactoryC2 is Ownable {
         lazyTransferProxy = _lazyTransferProxy;
     }
 
-    function createToken(string memory _name, string memory _symbol, string memory baseURI, string memory contractURI, uint salt) external {
+    function createToken(string memory _name, string memory _symbol, string memory baseURI, string memory contractURI, uint salt) external returns(address){
         address beaconProxy = deployProxy(getData(_name, _symbol, baseURI, contractURI), salt);
         ERC721RaribleMinimal token = ERC721RaribleMinimal(address(beaconProxy));
         token.transferOwnership(_msgSender());
         emit Create721RaribleProxy(beaconProxy);
+        return beaconProxy;
     }
 
-    function createToken(string memory _name, string memory _symbol, string memory baseURI, string memory contractURI, address[] memory operators, uint salt) external {
+    function createToken(string memory _name, string memory _symbol, string memory baseURI, string memory contractURI, address[] memory operators, uint salt) external returns(address){
         address beaconProxy = deployProxy(getData(_name, _symbol, baseURI, contractURI, operators), salt);
         ERC721RaribleMinimal token = ERC721RaribleMinimal(address(beaconProxy));
         token.transferOwnership(_msgSender());
         emit Create721RaribleUserProxy(beaconProxy);
+        return beaconProxy;
     }
 
     //deploying BeaconProxy contract with create2
