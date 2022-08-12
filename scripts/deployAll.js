@@ -43,6 +43,9 @@ async function main() {
   const ERC1155RaribleFactoryC2 = await ethers.getContractFactory(
     "@rarible/tokens/contracts/create-2/ERC1155RaribleFactoryC2.sol:ERC1155RaribleFactoryC2"
   );
+  const ERC721RaribleMinimal = await ethers.getContractFactory(
+    "@rarible/tokens/contracts/erc-721-minimal/ERC721RaribleMinimal.sol:ERC721RaribleMinimal"
+  );
 
   const transferProxy = await upgrades.deployProxy(TransferProxy, [], {
     initializer: "__TransferProxy_init",
@@ -140,7 +143,27 @@ async function main() {
   );
   console.log(await upgrades.erc1967.getAdminAddress(erc721rarible.address), " Asset Contract Erc721 admin address\n");
 
-  const erc721RaribleBeacon = await ERC721RaribleBeacon.deploy(erc721rarible.address);
+
+  const erc721raribleMinimal = await upgrades.deployProxy(
+    ERC721RaribleMinimal,
+    [
+      "FreeMintableRarible",
+      "RARI",
+      "https://ipfs.rarible.com",
+      "https://ipfs.rarible.com",
+      [],
+      transferProxy.address,
+      lazyTransferProxy721.address,
+    ],
+    {
+      initializer: "__ERC721RaribleUser_init",
+    }
+  );
+
+  await erc721raribleMinimal.deployed();
+
+
+  const erc721RaribleBeacon = await ERC721RaribleBeacon.deploy(await upgrades.erc1967.getImplementationAddress( erc721raribleMinimal.address));
   await erc721RaribleBeacon.deployed();
 
   console.log(erc721RaribleBeacon.address, "ERC721Beacon contract deployed \n");
@@ -174,7 +197,18 @@ async function main() {
     " Asset Contract Erc1155 admin address\n"
   );
 
-  const erc1155RaribleBeacon = await ERC1155RaribleBeacon.deploy(erc1155rarible.address);
+  const erc1155raribleUser = await upgrades.deployProxy(
+    ERC1155Rarible,
+    ["FreeMintable", "TST", "ipfs:/", "ipfs:/", [], transferProxy.address, lazyTransferProxy1155.address],
+    {
+      initializer: "__ERC1155RaribleUser_init",
+    }
+  );
+
+  await erc1155raribleUser.deployed();
+
+
+  const erc1155RaribleBeacon = await ERC1155RaribleBeacon.deploy(await upgrades.erc1967.getImplementationAddress( erc1155raribleUser.address));
   await erc1155RaribleBeacon.deployed();
 
   console.log(erc1155RaribleBeacon.address, "ERC1155Beacon contract deployed \n");
@@ -202,6 +236,18 @@ async function main() {
     }
   );
   await exchangeV2.deployed();
+
+  const tx1 = await transferProxy.addOperator(exchangeV2.address);
+  await tx1.wait();
+
+  const tx2 = await erc20TransferProxy.addOperator(exchangeV2.address);
+  await tx2.wait();
+
+  const tx3 = await lazyTransferProxy721.addOperator(exchangeV2.address);
+  await tx3.wait();
+
+  const tx4 = await lazyTransferProxy1155.addOperator(exchangeV2.address);
+  await tx4.wait();
 
   console.log(exchangeV2.address, " Exchange Contract(proxy) address");
   console.log(
